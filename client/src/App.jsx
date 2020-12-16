@@ -1,11 +1,17 @@
+import { BrowserRouter as Router } from "react-router-dom";
+import { NavigationProvider } from "./context/NavigationContext";
 import { UiProvider } from "./context/UiContext";
 import RouterPage from "./pages/RouterPage";
 
 const App = () => {
   return (
-    <UiProvider>
-      <RouterPage />
-    </UiProvider>
+    <Router>
+      <NavigationProvider>
+        <UiProvider>
+          <RouterPage />
+        </UiProvider>
+      </NavigationProvider>
+    </Router>
   );
 };
 

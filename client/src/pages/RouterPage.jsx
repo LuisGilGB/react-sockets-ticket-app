@@ -1,11 +1,5 @@
 import { useContext } from "react";
-import {
-  BrowserRouter as Router,
-  Link,
-  Redirect,
-  Route,
-  Switch,
-} from "react-router-dom";
+import { Link, Redirect, Route, Switch } from "react-router-dom";
 import { Layout, Menu } from "antd";
 import {
   UploadOutlined,
@@ -14,13 +8,14 @@ import {
 } from "@ant-design/icons";
 import { UiContext } from "../context/UiContext";
 import ROUTES from "../routes";
+import LogInPage from "./LogInPage";
 
 const { Content, Sider } = Layout;
 
 const RouterPage = () => {
   const { hiddenMenu } = useContext(UiContext);
   return (
-    <Router>
+    <>
       <Layout style={{ height: "100vh" }}>
         <Sider collapsedWidth={0} breakpoint="md" hidden={hiddenMenu}>
           <div className="logo" />
@@ -45,7 +40,7 @@ const RouterPage = () => {
           }}
         >
           <Switch>
-            <Route path={ROUTES.LOG_IN} />
+            <Route path={ROUTES.LOG_IN} component={LogInPage} />
             <Route path={ROUTES.QUEUE} />
             <Route path={ROUTES.TICKET_EXPENDER} />
             <Route path={ROUTES.DESKTOP} />
@@ -53,7 +48,7 @@ const RouterPage = () => {
           </Switch>
         </Content>
       </Layout>
-    </Router>
+    </>
   );
 };
 
