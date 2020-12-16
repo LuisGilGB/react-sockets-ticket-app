@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import { Link, Redirect, Route, Switch } from "react-router-dom";
 import { Layout, Menu } from "antd";
 import {
@@ -6,27 +6,65 @@ import {
   UserOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
+import { NavigationContext } from "../context/NavigationContext";
 import { UiContext } from "../context/UiContext";
-import ROUTES from "../routes";
 import LogInPage from "./LogInPage";
+import ROUTES from "../routes";
 
 const { Content, Sider } = Layout;
 
+const HOME_PAGE = "home";
+const LOG_IN_PAGE = "logIn";
+const QUEUE_PAGE = "queue";
+const TICKET_PAGE = "ticket";
+const DESKTOP_PAGE = "desktop";
+
 const RouterPage = () => {
+  const {
+    inHomePath,
+    inLoginPath,
+    inQueuePath,
+    inTicketExpenderPath,
+    inDesktopPath,
+  } = useContext(NavigationContext);
   const { hiddenMenu } = useContext(UiContext);
+
+  const selectedKeys = useMemo(() => {
+    const pathMatchers = {
+      [HOME_PAGE]: inHomePath,
+      [LOG_IN_PAGE]: inLoginPath,
+      [QUEUE_PAGE]: inQueuePath,
+      [TICKET_PAGE]: inTicketExpenderPath,
+      [DESKTOP_PAGE]: inDesktopPath,
+    };
+
+    return Object.keys(pathMatchers).filter((key) => !!pathMatchers[key]);
+  }, [
+    inHomePath,
+    inLoginPath,
+    inQueuePath,
+    inTicketExpenderPath,
+    inDesktopPath,
+  ]);
+
   return (
     <>
       <Layout style={{ height: "100vh" }}>
         <Sider collapsedWidth={0} breakpoint="md" hidden={hiddenMenu}>
           <div className="logo" />
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={["log-in"]}>
-            <Menu.Item key="log-in" icon={<UserOutlined />}>
+          <Menu
+            theme="dark"
+            mode="inline"
+            selectedKeys={selectedKeys}
+            defaultSelectedKeys={[LOG_IN_PAGE]}
+          >
+            <Menu.Item key={LOG_IN_PAGE} icon={<UserOutlined />}>
               <Link to={ROUTES.LOG_IN}>Log In</Link>
             </Menu.Item>
-            <Menu.Item key="queue" icon={<VideoCameraOutlined />}>
+            <Menu.Item key={QUEUE_PAGE} icon={<VideoCameraOutlined />}>
               <Link to={ROUTES.QUEUE}>Queue</Link>
             </Menu.Item>
-            <Menu.Item key="ticket-expender" icon={<UploadOutlined />}>
+            <Menu.Item key={TICKET_PAGE} icon={<UploadOutlined />}>
               <Link to={ROUTES.TICKET_EXPENDER}>Ticket expender</Link>
             </Menu.Item>
           </Menu>

@@ -2,7 +2,7 @@ import { Button, Divider, Form, Input, InputNumber } from "antd";
 import Text from "antd/lib/typography/Text";
 import Title from "antd/lib/typography/Title";
 import { SaveOutlined } from "@ant-design/icons";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { NavigationContext } from "../context/NavigationContext";
 
 const INITIAL_VALUE = {
