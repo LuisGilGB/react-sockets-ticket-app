@@ -10,6 +10,7 @@ import { NavigationContext } from "../context/NavigationContext";
 import { UiContext } from "../context/UiContext";
 import LogInPage from "./LogInPage";
 import QueuePage from "./QueuePage";
+import TicketExpenderPage from "./TicketExpenderPage";
 import DesktopPage from "./DesktopPage";
 import ROUTES from "../routes";
 
@@ -82,7 +83,10 @@ const RouterPage = () => {
           <Switch>
             <Route path={ROUTES.LOG_IN} component={LogInPage} />
             <Route path={ROUTES.QUEUE} component={QueuePage} />
-            <Route path={ROUTES.TICKET_EXPENDER} />
+            <Route
+              path={ROUTES.TICKET_EXPENDER}
+              component={TicketExpenderPage}
+            />
             <Route path={ROUTES.DESKTOP} component={DesktopPage} />
             <Redirect to={ROUTES.LOG_IN} />
           </Switch>

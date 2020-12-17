@@ -1,5 +1,4 @@
 import { Card, Col, Divider, List, Row, Tag } from "antd";
-import {} from "@ant-design/icons";
 import Title from "antd/lib/skeleton/Title";
 import Text from "antd/lib/typography/Text";
 
