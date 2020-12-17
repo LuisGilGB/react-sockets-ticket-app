@@ -4,6 +4,7 @@ import Title from "antd/lib/typography/Title";
 import { SaveOutlined } from "@ant-design/icons";
 import { useContext } from "react";
 import { NavigationContext } from "../context/NavigationContext";
+import { UserContext } from "../context/UserContext";
 
 const INITIAL_VALUE = {
   name: "",
@@ -13,9 +14,11 @@ const INITIAL_VALUE = {
 
 const LogInPage = () => {
   const { goToDesktop } = useContext(NavigationContext);
+  const { logIn } = useContext(UserContext);
   const [form] = Form.useForm();
 
   const onFinish = (value) => {
+    logIn(value.name, value.desktopNumber);
     goToDesktop();
   };
 
