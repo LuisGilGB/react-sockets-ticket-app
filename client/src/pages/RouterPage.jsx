@@ -9,6 +9,7 @@ import {
 import { NavigationContext } from "../context/NavigationContext";
 import { UiContext } from "../context/UiContext";
 import LogInPage from "./LogInPage";
+import DesktopPage from "./DesktopPage";
 import ROUTES from "../routes";
 
 const { Content, Sider } = Layout;
@@ -81,7 +82,7 @@ const RouterPage = () => {
             <Route path={ROUTES.LOG_IN} component={LogInPage} />
             <Route path={ROUTES.QUEUE} />
             <Route path={ROUTES.TICKET_EXPENDER} />
-            <Route path={ROUTES.DESKTOP} />
+            <Route path={ROUTES.DESKTOP} component={DesktopPage} />
             <Redirect to={ROUTES.LOG_IN} />
           </Switch>
         </Content>
