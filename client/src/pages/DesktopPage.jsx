@@ -5,12 +5,16 @@ import Title from "antd/lib/typography/Title";
 import { CloseCircleOutlined, RightOutlined } from "@ant-design/icons";
 import { UserContext } from "../context/UserContext";
 import { NavigationContext } from "../context/NavigationContext";
+import { TicketsContext } from "../context/TicketsContext";
 
 const DesktopPage = () => {
   const { logOut, loggedIn, userName, userDesktop } = useContext(UserContext);
+  const { queueData, attendTicket } = useContext(TicketsContext);
   const { goToLogin } = useContext(NavigationContext);
 
-  const attendNewTicket = () => {};
+  const currentAttentionNumber = queueData.filter(
+    (o) => o.desktopNumber === userDesktop
+  )[0];
 
   return (
     <>
@@ -34,13 +38,19 @@ const DesktopPage = () => {
             <Col>
               <Text>Attending ticket number: </Text>
               <Text style={{ fontSize: 30 }} type="danger">
-                155
+                {currentAttentionNumber ? currentAttentionNumber.ticket : "-"}
               </Text>
             </Col>
           </Row>
           <Row>
             <Col offset={18} span={6} align="right">
-              <Button shape="round" type="primary" onClick={attendNewTicket}>
+              <Button
+                shape="round"
+                type="primary"
+                onClick={() => {
+                  attendTicket(userDesktop);
+                }}
+              >
                 <RightOutlined />
                 Next ticket
               </Button>

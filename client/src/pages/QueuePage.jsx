@@ -1,8 +1,12 @@
+import { useContext } from "react";
 import { Card, Col, Divider, List, Row, Tag } from "antd";
-import Title from "antd/lib/skeleton/Title";
+import Title from "antd/lib/typography/Title";
 import Text from "antd/lib/typography/Text";
+import { TicketsContext } from "../context/TicketsContext";
 
-const QueuePage = ({ data = [] }) => {
+const QueuePage = () => {
+  const { queueData } = useContext(TicketsContext);
+  const data = queueData;
   return (
     <>
       <Title level={1}>Attending client</Title>
@@ -19,7 +23,7 @@ const QueuePage = ({ data = [] }) => {
                     <Tag color="magenta">Desktop: {item.desktopNumber}</Tag>,
                   ]}
                 >
-                  <Title>No. {item.ticketNumber}</Title>
+                  <Title># {item.ticket}</Title>
                 </Card>
               </List.Item>
             )}
@@ -32,13 +36,13 @@ const QueuePage = ({ data = [] }) => {
             renderItem={(item) => (
               <List.Item>
                 <List.Item.Meta
-                  title={`Ticket number ${item.ticketNumber}`}
+                  title={`Ticket number ${item.ticket}`}
                   description={
                     <>
                       <Text type="secondary">On Desktop:</Text>
-                      <Text color="magenta">{item.ticketNumber}</Text>
+                      <Tag color="magenta">{item.desktopNumber}</Tag>
                       <Text type="secondary">Agent:</Text>
-                      <Text color="volcano">{item.agent}</Text>
+                      <Tag color="volcano">{item.agent}</Tag>
                     </>
                   }
                 />

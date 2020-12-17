@@ -1,10 +1,12 @@
+import { useContext } from "react";
 import { Button, Col, Row } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
 import Text from "antd/lib/typography/Text";
 import Title from "antd/lib/typography/Title";
+import { TicketsContext } from "../context/TicketsContext";
 
 const TicketExpenderPage = () => {
-  const onNewTicketRequest = () => {};
+  const { nextExpendableTicket, expendTicket } = useContext(TicketsContext);
 
   return (
     <>
@@ -16,7 +18,7 @@ const TicketExpenderPage = () => {
             shape="round"
             icon={<DownloadOutlined />}
             size="large"
-            onClick={onNewTicketRequest}
+            onClick={expendTicket}
           >
             New ticket
           </Button>
@@ -24,10 +26,10 @@ const TicketExpenderPage = () => {
       </Row>
       <Row style={{ marginTop: 100 }}>
         <Col span={14} offset={6} align="center">
-          <Text level={2}>Your number</Text>
+          <Text level={2}>Next number</Text>
           <br />
           <Text type="success" style={{ fontSize: 55 }}>
-            55
+            {nextExpendableTicket}
           </Text>
         </Col>
       </Row>
