@@ -38,7 +38,9 @@ const DesktopPage = () => {
             <Col>
               <Text>Attending ticket number: </Text>
               <Text style={{ fontSize: 30 }} type="danger">
-                {currentAttentionNumber ? currentAttentionNumber.ticket : "-"}
+                {currentAttentionNumber
+                  ? currentAttentionNumber.ticketNumber
+                  : "-"}
               </Text>
             </Col>
           </Row>

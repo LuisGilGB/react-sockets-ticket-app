@@ -23,7 +23,7 @@ const QueuePage = () => {
                     <Tag color="magenta">Desktop: {item.desktopNumber}</Tag>,
                   ]}
                 >
-                  <Title># {item.ticket}</Title>
+                  <Title># {item.ticketNumber}</Title>
                 </Card>
               </List.Item>
             )}
@@ -36,7 +36,7 @@ const QueuePage = () => {
             renderItem={(item) => (
               <List.Item>
                 <List.Item.Meta
-                  title={`Ticket number ${item.ticket}`}
+                  title={`Ticket number ${item.ticketNumber}`}
                   description={
                     <>
                       <Text type="secondary">On Desktop:</Text>

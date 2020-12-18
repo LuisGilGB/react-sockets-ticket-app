@@ -1,8 +1,10 @@
-import { createContext, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
+import { SocketContext } from "./SocketContext";
 
 const ACTIONS = {
   EXPEND_TICKET: "EXPEND_TICKET",
   ATTEND_TICKET: "ATTEND_TICKET",
+  UPDATE_DATA: "UPDATE_DATA",
   RESET: "RESET",
 };
 
@@ -29,6 +31,13 @@ const reducer = (state, { type, payload }) => {
         ...state.queueData,
       ],
     }),
+    [ACTIONS.UPDATE_DATA]: () => ({
+      nextExpendableTicket: payload.nextExpendableTicket,
+      queueData: payload.queueData.map(({ number, desktopNumber }) => ({
+        ticketNumber: number,
+        desktopNumber,
+      })),
+    }),
     [ACTIONS.RESET]: () => initialState,
   };
 
@@ -43,18 +52,31 @@ const reducer = (state, { type, payload }) => {
 export const TicketsContext = createContext();
 
 export const TicketsProvider = ({ children }) => {
+  const { socket } = useContext(SocketContext);
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  useEffect(() => {
+    socket.on("update-data", ({ payload }) => {
+      dispatch({
+        type: ACTIONS.UPDATE_DATA,
+        payload,
+      });
+    });
+  }, [socket]);
+
   const expendTicket = () => {
-    dispatch({ type: ACTIONS.EXPEND_TICKET, payload: {} });
+    socket.emit("expend-ticket", { payload: {} });
+    // dispatch({ type: ACTIONS.EXPEND_TICKET, payload: {} });
   };
 
   const attendTicket = (desktopNumber) => {
-    dispatch({ type: ACTIONS.ATTEND_TICKET, payload: { desktopNumber } });
+    socket.emit("call-next-ticket", { payload: { desktopNumber } });
+    // dispatch({ type: ACTIONS.ATTEND_TICKET, payload: { desktopNumber } });
   };
 
   const resetTicketsManager = () => {
-    dispatch({ type: ACTIONS.RESET, payload: {} });
+    socket.emit("reset-queue", { payload: {} });
+    // dispatch({ type: ACTIONS.RESET, payload: {} });
   };
 
   return (

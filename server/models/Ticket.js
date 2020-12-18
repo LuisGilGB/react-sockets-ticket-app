@@ -11,7 +11,7 @@ class Ticket {
   }
 
   callFromDesktop(desktopNumber) {
-    this.attended = false;
+    this.attended = true;
     this.desktopNumber = desktopNumber;
     this.callDate = +new Date();
   }
