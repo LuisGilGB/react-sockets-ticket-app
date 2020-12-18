@@ -6,7 +6,7 @@ import { TicketsContext } from "../context/TicketsContext";
 
 const QueuePage = () => {
   const { queueData } = useContext(TicketsContext);
-  const data = queueData;
+  const data = queueData.map((e, i) => queueData[queueData.length - 1 - i]);
   return (
     <>
       <Title level={1}>Attending client</Title>
@@ -19,7 +19,6 @@ const QueuePage = () => {
                 <Card
                   style={{ width: 300, marginTop: 16 }}
                   actions={[
-                    <Tag color="volcano">{item.agent}</Tag>,
                     <Tag color="magenta">Desktop: {item.desktopNumber}</Tag>,
                   ]}
                 >
@@ -39,10 +38,8 @@ const QueuePage = () => {
                   title={`Ticket number ${item.ticketNumber}`}
                   description={
                     <>
-                      <Text type="secondary">On Desktop:</Text>
+                      <Text type="secondary">On Desktop: </Text>
                       <Tag color="magenta">{item.desktopNumber}</Tag>
-                      <Text type="secondary">Agent:</Text>
-                      <Tag color="volcano">{item.agent}</Tag>
                     </>
                   }
                 />

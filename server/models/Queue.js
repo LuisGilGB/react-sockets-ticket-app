@@ -18,6 +18,7 @@ class Queue {
   callNextPendingTicket(desktopNumber) {
     const nextTicket = this.queueData.find((t) => !t.attended);
     nextTicket && nextTicket.callFromDesktop(desktopNumber);
+    return nextTicket ? nextTicket.number : null;
   }
 }
 

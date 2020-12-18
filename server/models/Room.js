@@ -1,9 +1,13 @@
 const Queue = require("./Queue");
 
 class Room {
-  constructor(io, props = {}) {
+  constructor(io, totalDesktops = 1, props = {}) {
     this.io = io;
     this.queue = new Queue();
+    this.desktopsStatus = {};
+    for (let i = 0; i <= totalDesktops; i++) {
+      this.desktopsStatus[i] = null;
+    }
 
     this.addSocketEvents();
   }
@@ -16,6 +20,7 @@ class Room {
           payload: {
             nextExpendableTicket: this.queue.nextNumber,
             queueData: this.queue.lastTenAttendedTickets,
+            desktopsStatus: this.desktopsStatus,
           },
         });
       };
@@ -28,6 +33,7 @@ class Room {
         payload: {
           nextExpendableTicket: this.queue.nextNumber,
           queueData: this.queue.lastTenAttendedTickets,
+          desktopsStatus: this.desktopsStatus,
         },
       });
 
@@ -39,7 +45,9 @@ class Room {
       });
 
       socket.on("call-next-ticket", ({ payload }) => {
-        this.queue.callNextPendingTicket(payload.desktopNumber);
+        const { desktopNumber } = payload;
+        const ticketNumber = this.queue.callNextPendingTicket(desktopNumber);
+        this.desktopsStatus[desktopNumber] = ticketNumber;
         emitUpdateData();
       });
     });

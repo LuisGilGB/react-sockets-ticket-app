@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Button, Col, Divider, Result, Row } from "antd";
+import { Button, Col, Divider, Result, Row, Tag } from "antd";
 import Text from "antd/lib/typography/Text";
 import Title from "antd/lib/typography/Title";
 import { CloseCircleOutlined, RightOutlined } from "@ant-design/icons";
@@ -9,12 +9,8 @@ import { TicketsContext } from "../context/TicketsContext";
 
 const DesktopPage = () => {
   const { logOut, loggedIn, userName, userDesktop } = useContext(UserContext);
-  const { queueData, attendTicket } = useContext(TicketsContext);
+  const { desktopsStatus, attendTicket } = useContext(TicketsContext);
   const { goToLogin } = useContext(NavigationContext);
-
-  const currentAttentionNumber = queueData.filter(
-    (o) => o.desktopNumber === userDesktop
-  )[0];
 
   return (
     <>
@@ -38,9 +34,11 @@ const DesktopPage = () => {
             <Col>
               <Text>Attending ticket number: </Text>
               <Text style={{ fontSize: 30 }} type="danger">
-                {currentAttentionNumber
-                  ? currentAttentionNumber.ticketNumber
-                  : "-"}
+                {desktopsStatus[userDesktop] || (
+                  <Tag color="magenta">
+                    No tickets to attend (try again later)
+                  </Tag>
+                )}
               </Text>
             </Col>
           </Row>

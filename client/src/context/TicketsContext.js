@@ -12,6 +12,7 @@ const initialState = {
   nextExpendableTicket: 1,
   nextAttendableTicket: null,
   queueData: [],
+  desktopsStatus: {},
 };
 
 const reducer = (state, { type, payload }) => {
@@ -37,6 +38,7 @@ const reducer = (state, { type, payload }) => {
         ticketNumber: number,
         desktopNumber,
       })),
+      desktopsStatus: payload.desktopsStatus,
     }),
     [ACTIONS.RESET]: () => initialState,
   };

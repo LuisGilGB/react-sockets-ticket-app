@@ -8,6 +8,8 @@ const Room = require("./Room");
 
 const PUBLIC_DIR = path.resolve(__dirname, "../public");
 
+const TOTAL_DESKTOPS = 12;
+
 class Server {
   constructor() {
     this.app = express();
@@ -17,7 +19,7 @@ class Server {
 
     this.io = socketio(this.server, {});
 
-    this.room = new Room(this.io);
+    this.room = new Room(this.io, TOTAL_DESKTOPS);
   }
 
   initMiddlewares() {
