@@ -4,7 +4,7 @@ const express = require("express");
 const socketio = require("socket.io");
 const cors = require("cors");
 
-const Sockets = require("./Sockets");
+const Room = require("./Room");
 
 const PUBLIC_DIR = path.resolve(__dirname, "../public");
 
@@ -17,7 +17,7 @@ class Server {
 
     this.io = socketio(this.server, {});
 
-    this.sockets = new Sockets(this.io);
+    this.room = new Room(this.io);
   }
 
   initMiddlewares() {

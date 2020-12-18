@@ -1,6 +1,6 @@
 const Queue = require("./Queue");
 
-class Sockets {
+class Room {
   constructor(io, props = {}) {
     this.io = io;
     this.queue = new Queue();
@@ -21,10 +21,15 @@ class Sockets {
       };
 
       socket.emit("connection-message", {
-        msg: "Welcme to server!",
+        msg: "Welcome to server!",
         date: new Date(),
       });
-      emitUpdateData();
+      socket.emit("update-data", {
+        payload: {
+          nextExpendableTicket: this.queue.nextNumber,
+          queueData: this.queue.lastTenAttendedTickets,
+        },
+      });
 
       socket.on("client-message", (data) => {});
 
@@ -41,4 +46,4 @@ class Sockets {
   }
 }
 
-module.exports = Sockets;
+module.exports = Room;

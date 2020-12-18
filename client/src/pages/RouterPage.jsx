@@ -7,7 +7,7 @@ import {
   VideoCameraOutlined,
 } from "@ant-design/icons";
 import { NavigationContext } from "../context/NavigationContext";
-import { UiContext } from "../context/UiContext";
+import { UserContext } from "../context/UserContext";
 import LogInPage from "./LogInPage";
 import QueuePage from "./QueuePage";
 import TicketExpenderPage from "./TicketExpenderPage";
@@ -30,7 +30,7 @@ const RouterPage = () => {
     inTicketExpenderPath,
     inDesktopPath,
   } = useContext(NavigationContext);
-  const { hiddenMenu } = useContext(UiContext);
+  const { loggedIn } = useContext(UserContext);
 
   const selectedKeys = useMemo(() => {
     const pathMatchers = {
@@ -53,7 +53,11 @@ const RouterPage = () => {
   return (
     <>
       <Layout style={{ minHeight: "100vh" }}>
-        <Sider collapsedWidth={0} breakpoint="md" hidden={hiddenMenu}>
+        <Sider
+          collapsedWidth={0}
+          breakpoint="md"
+          hidden={inQueuePath || inTicketExpenderPath}
+        >
           <div className="logo" />
           <Menu
             theme="dark"
@@ -61,9 +65,15 @@ const RouterPage = () => {
             selectedKeys={selectedKeys}
             defaultSelectedKeys={[LOG_IN_PAGE]}
           >
-            <Menu.Item key={LOG_IN_PAGE} icon={<UserOutlined />}>
-              <Link to={ROUTES.LOG_IN}>Log In</Link>
-            </Menu.Item>
+            {loggedIn ? (
+              <Menu.Item key={DESKTOP_PAGE} icon={<UserOutlined />}>
+                <Link to={ROUTES.DESKTOP}>Desktop</Link>
+              </Menu.Item>
+            ) : (
+              <Menu.Item key={LOG_IN_PAGE} icon={<UserOutlined />}>
+                <Link to={ROUTES.LOG_IN}>Log In</Link>
+              </Menu.Item>
+            )}
             <Menu.Item key={QUEUE_PAGE} icon={<VideoCameraOutlined />}>
               <Link to={ROUTES.QUEUE}>Queue</Link>
             </Menu.Item>

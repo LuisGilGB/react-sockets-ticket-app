@@ -5,6 +5,8 @@ import { SaveOutlined } from "@ant-design/icons";
 import { useContext } from "react";
 import { NavigationContext } from "../context/NavigationContext";
 import { UserContext } from "../context/UserContext";
+import { Redirect } from "react-router-dom";
+import ROUTES from "../routes";
 
 const INITIAL_VALUE = {
   name: "",
@@ -14,7 +16,7 @@ const INITIAL_VALUE = {
 
 const LogInPage = () => {
   const { goToDesktop } = useContext(NavigationContext);
-  const { logIn } = useContext(UserContext);
+  const { logIn, loggedIn } = useContext(UserContext);
   const [form] = Form.useForm();
 
   const onFinish = (value) => {
@@ -24,7 +26,9 @@ const LogInPage = () => {
 
   const onFinishFailed = ({ errorFields, outOfDate, values }) => {};
 
-  return (
+  return loggedIn ? (
+    <Redirect to={ROUTES.DESKTOP} />
+  ) : (
     <>
       <Title level={2}>Log In</Title>
       <Text>Type your name and desktop number</Text>
